@@ -120,7 +120,7 @@ class LaneLines:
         rightx_current = rightx_base
         y_current = img.shape[0] + self.window_height//2
 
-        # Create empty lists to reveice left and right lane pixel
+        # Create empty lists to receive left and right lane pixel
         leftx, lefty, rightx, righty = [], [], [], []
 
         # Step through the windows one by one
@@ -131,6 +131,8 @@ class LaneLines:
 
             good_left_x, good_left_y = self.pixels_in_window(center_left, self.margin, self.window_height)
             good_right_x, good_right_y = self.pixels_in_window(center_right, self.margin, self.window_height)
+            print("good_left_x = ", good_left_x)
+            print("good_left_y = ", good_left_y)
 
             # Append these indices to the lists
             leftx.extend(good_left_x)
@@ -143,8 +145,8 @@ class LaneLines:
             if len(good_right_x) > self.minpix:
                 rightx_current = np.int32(np.mean(good_right_x))
         
-        print(len(lefty))
-        print(len(leftx))
+        print("lefty = ", len(lefty))
+        print("leftx = ", len(leftx))
 
         return leftx, lefty, rightx, righty, out_img
 

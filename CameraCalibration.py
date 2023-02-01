@@ -57,4 +57,5 @@ class CameraCalibration():
         """
         # Convert to grayscale image
         gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        # return cv2.undistort(img, None, None, None, None)
         return cv2.undistort(img, self.mtx, self.dist, None, self.mtx)

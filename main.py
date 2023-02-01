@@ -51,13 +51,7 @@ class FindLaneLines:
     def process_image(self, input_path, output_path):
         img = mpimg.imread(input_path)
         out_img = self.forward(img)
-        # print(out_img)
         mpimg.imsave(output_path, out_img)
-
-    # def process_video(self, input):
-    #     clip = input
-    #     out_clip = clip.fl_image(self.forward)
-        # out_clip.write_videofile(output_path, audio=False)
 
     def process_video(self, input_path, output_path):
         clip = VideoFileClip(input_path)
@@ -78,28 +72,6 @@ def main():
         findLaneLines.process_video(input, output)
     else:
         findLaneLines.process_image(input, output)
-
-    # cap = cv2.VideoCapture(0)
-
-    # while True:
-    #     if not cap.isOpened():
-    #         print("Cannot open camera")
-    #         exit()
-    #     ret, input = cap.read()
-    
-
-    #     findLaneLines = FindLaneLines()
-    #     result = findLaneLines.process_video(input)
-    #     cv2.imshow("Lane Assist", result)
-
-    #     k = cv2.waitKey(100)
-    #     if k%256 == 27:
-    #       # ESC pressed
-    #       print("Escape hit, closing...")
-    #       break
-
-    # cap.release()
-    # cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
