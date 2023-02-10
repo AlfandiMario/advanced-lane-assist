@@ -52,40 +52,31 @@ class FindLaneLines:
 #         out_clip.write_videofile(output_path, audio=False)
 
 def main():
-     # findLaneLines = FindLaneLines()
+    findLaneLines = FindLaneLines()
+    
+    cap = cv2.VideoCapture('test_videos/11_test.mp4')
 
-     cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        print("Cannot open camera")
+        exit()
 
-     while True:
-          if not cap.isOpened():
-               print("Cannot open camera")
-               exit()
-          _, img = cap.read()
+    while True:
+        _, img = cap.read()
 
-          out_img = np.copy(img)
-          img = CameraCalibration.undistort(img, 9, 6)
-          img = PerspectiveTransformation.forward(img)
-          img = Thresholding.forward(img)
-          img = LaneLines.forward(img)
-          img = PerspectiveTransformation.backward(img)
+        out_img = np.copy(img)
 
-          out_img = cv2.addWeighted(out_img, 1, img, 0.6, 0)
-          out_img = LaneLines.plot(out_img)
+        result = findLaneLines.forward(out_img)
 
-          # result = findLaneLines.process_video(input)
-          # if not result == None :
-          #      print("Telah diproses")
+        cv2.imshow("Lane Assist", result)
 
-          cv2.imshow("Lane Assist", out_img)
-
-          k = cv2.waitKey(30)
-          if k%256 == 27:
-          # ESC pressed
-               print("Escape hit, closing...")
-               break
+        k = cv2.waitKey(30)
+        if k%256 == 27:
+        # ESC pressed
+            print("Escape hit, closing...")
+            break
           
-     cap.release()
-     cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
